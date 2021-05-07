@@ -107,4 +107,18 @@ public class TestStringCalculator {
     void test_stringWithMultipleCharStarDelimiter() {
         assertEquals(6, StringCalculator.add("//[***]\n1***2***3"));
     }
+
+    @Test
+    void test_stringWithCustomDelimiterAndNegativeNumber() {
+        Exception e = assertThrows(IllegalArgumentException.class,
+                () -> StringCalculator.add("//[%*%]\n1%*%-2%*%-3")
+        );
+        assertEquals("Negatives not allowed: -2,-3", e.getMessage());
+    }
+
+    @Test
+    public void test_stringHasASpecialCharacterAndCustomDelimiter() {
+        assertThrows(IllegalArgumentException.class,
+                () -> StringCalculator.add("//[%*%]1%*%@%*%3"));
+    }
 }
