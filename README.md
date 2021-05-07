@@ -1,2 +1,3 @@
 # String-Calculator
- TDD kata-1
+TDD Kata 1 - String Calculator
+http://osherove.com/kata

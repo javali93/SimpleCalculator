@@ -4,6 +4,10 @@ import java.util.List;
 
 import static java.util.stream.Collectors.joining;
 
+/**
+ * @author chetana
+ * @created on: 07, May 2021
+ */
 public class StringCalculator {
 
     public static int add(String numbers) {
