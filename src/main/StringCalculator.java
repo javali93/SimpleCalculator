@@ -16,7 +16,7 @@ public class StringCalculator {
             return 0;
         }
         StringNumberSplitter stringNumberSplitter = new StringNumberSplitter();
-        List<String> numbersList = stringNumberSplitter.getNumbers(numbers);
+        List<String> numbersList = stringNumberSplitter.getNumbersList(numbers);
         checkForNegativeNumbers(numbersList);
         return sumNumbers(numbersList);
     }

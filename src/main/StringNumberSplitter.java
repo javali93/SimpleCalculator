@@ -1,8 +1,9 @@
 package main;
 
+import java.util.Arrays;
 import java.util.List;
-
-import static java.util.Arrays.asList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author chetana
@@ -10,18 +11,38 @@ import static java.util.Arrays.asList;
  */
 public class StringNumberSplitter {
 
+    private static final String OR = "|";
 
-    List<String> getNumbers(String text) {
+    List<String> getNumbersList(String text) {
         String delimiters = getDelimiters();
-        return splitNumbers(text, delimiters);
+        return splitStringToNumberList(text, delimiters);
     }
 
-    private List<String> splitNumbers(String string, String delimiters) {
-        return asList(string.split(delimiters));
+    private List<String> splitStringToNumberList(String text, String delimiters) {
+        if(hasCustomDelimiter(text)){
+            int newLineIndex = text.indexOf("\n");
+
+            delimiters += OR + customDelimiter(text.substring(0,newLineIndex+1));
+            text = text.subSequence(newLineIndex+1,text.length()).toString();
+        }
+        return Arrays.asList(text.split(delimiters));
+    }
+
+    private String customDelimiter(String text) {
+        return text.replace("//","").replace("\n","");
+    }
+
+    private boolean hasCustomDelimiter(String text) {
+        Pattern pattern = Pattern.compile("//(.|\\[.*\\])\n(.{0,})");
+        Matcher matcher = pattern.matcher(text);
+        if(matcher.matches()){
+            return true;
+        }
+        return false;
     }
 
     private String getDelimiters() {
-        String delimiters = ",|\n"; //Default delimiters
+        String delimiters = "," + OR + "\n"; //Default delimiters
         return delimiters;
     }
 }

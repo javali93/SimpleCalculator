@@ -17,12 +17,17 @@ public class TestStringCalculator {
     }
 
     @Test
+    void test_nullString() {
+        assertEquals(0, StringCalculator.add(null));
+    }
+
+    @Test
     void test_singleNumberString() {
         assertEquals(1, StringCalculator.add("1"));
     }
 
     @Test
-    void test_singleNumberStringWithDefaultDelimeters() {
+    void test_singleNumberStringWithDefaultDelimiters() {
         assertEquals(2, StringCalculator.add("2\n"));
     }
 
@@ -44,9 +49,8 @@ public class TestStringCalculator {
         assertEquals("Negatives not allowed: -2,-13", e.getMessage());
     }
 
-
     @Test
-    void test_multipleNumbersStringWithDefaultDelimeters() {
+    void test_multipleNumbersStringWithDefaultDelimiters() {
         assertEquals(6, StringCalculator.add("1\n2,3"));
     }
 
@@ -59,4 +63,35 @@ public class TestStringCalculator {
     void test_ignoreNumbersBiggerThan1000() {
         assertEquals(2, StringCalculator.add("2,1001"));
     }
+
+    @Test
+    public void test_throwIllegalArgumentExceptionWhenStringHasSpace() {
+        assertThrows(IllegalArgumentException.class,
+                () -> StringCalculator.add("1,2, 13"));
+    }
+
+    @Test
+    public void test_throwIllegalArgumentExceptionWhenStringHasExtraComma() {
+        assertThrows(IllegalArgumentException.class,
+                () -> StringCalculator.add("1,,2,13"));
+    }
+
+    @Test
+    public void test_throwIllegalArgumentExceptionWhenStringHasAlphabet() {
+        assertThrows(IllegalArgumentException.class,
+                () -> StringCalculator.add("1,a,13"));
+    }
+
+    @Test
+    public void test_throwIllegalArgumentExceptionWhenStringHasASpecialCharacter() {
+        assertThrows(IllegalArgumentException.class,
+                () -> StringCalculator.add("1,*,13"));
+    }
+
+    @Test
+    void test_stringWithSingleCharCustomDelimiter() {
+        assertEquals(6, StringCalculator.add("//;\n1;2;3"));
+    }
+
+
 }
