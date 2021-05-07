@@ -32,7 +32,8 @@ public class StringNumberSplitter {
         return text.replace("//","")
                 .replace("\n","")
                 .replace("[","")
-                .replace("]","");
+                .replace("]","")
+                .replace("*","\\*");
     }
 
     private boolean hasCustomDelimiter(String text) {

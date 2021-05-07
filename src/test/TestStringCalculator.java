@@ -94,7 +94,17 @@ public class TestStringCalculator {
     }
 
     @Test
-    void test_stringWithMultipleCharCustomDelimiter() {
+    void test_stringWithMultipleRepeatCharCustomDelimiter() {
         assertEquals(6, StringCalculator.add("//[%%%]\n1%%%2%%%3"));
+    }
+
+    @Test
+    void test_stringWithMultipleNonRepeatCharCustomDelimiter() {
+        assertEquals(10, StringCalculator.add("//[abc]\n1abc2abc3abc4"));
+    }
+
+    @Test
+    void test_stringWithMultipleCharStarDelimiter() {
+        assertEquals(6, StringCalculator.add("//[***]\n1***2***3"));
     }
 }
