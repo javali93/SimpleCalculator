@@ -121,4 +121,14 @@ public class TestStringCalculator {
         assertThrows(IllegalArgumentException.class,
                 () -> StringCalculator.add("//[%*%]1%*%@%*%3"));
     }
+
+    @Test
+    void test_stringWithCustomAndDefaultDelimiters() {
+        assertEquals(15, StringCalculator.add("//[%%%]\n1%%%2,3%%%4,5"));
+    }
+
+    @Test
+    void test_stringWithCustomDelimiterWithOutSquareBrackets() {
+        assertThrows(IllegalArgumentException.class,
+                () -> StringCalculator.add("//;;\n1;;2;;3"));
 }

@@ -13,15 +13,10 @@ public class StringNumberSplitter {
 
     private static final String OR = "|";
 
-    List<String> getNumbersList(String text) {
-        String delimiters = getDelimiters();
-        return splitStringToNumberList(text, delimiters);
-    }
-
-    private List<String> splitStringToNumberList(String text, String delimiters) {
+    protected List<String> splitStringToNumberList(String text) {
+        String delimiters = getDefaultDelimiters();
         if (hasCustomDelimiter(text)) {
             int newLineIndex = text.indexOf("\n");
-
             delimiters += OR + getCustomDelimiter(text.substring(0, newLineIndex + 1));
             text = text.subSequence(newLineIndex + 1, text.length()).toString();
         }
@@ -45,9 +40,9 @@ public class StringNumberSplitter {
         return false;
     }
 
-    private String getDelimiters() {
-        String delimiters = "," + OR + "\n"; //Default delimiters
-        return delimiters;
+    private String getDefaultDelimiters() {
+        String defaultDelimiters = "," + OR + "\n";
+        return defaultDelimiters;
     }
 }
 
