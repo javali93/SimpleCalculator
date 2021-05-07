@@ -93,5 +93,8 @@ public class TestStringCalculator {
         assertEquals(6, StringCalculator.add("//;\n1;2;3"));
     }
 
-
+    @Test
+    void test_stringWithMultipleCharCustomDelimiter() {
+        assertEquals(6, StringCalculator.add("//[%%%]\n1%%%2%%%3"));
+    }
 }

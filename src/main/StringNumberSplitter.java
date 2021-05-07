@@ -29,7 +29,10 @@ public class StringNumberSplitter {
     }
 
     private String customDelimiter(String text) {
-        return text.replace("//","").replace("\n","");
+        return text.replace("//","")
+                .replace("\n","")
+                .replace("[","")
+                .replace("]","");
     }
 
     private boolean hasCustomDelimiter(String text) {
