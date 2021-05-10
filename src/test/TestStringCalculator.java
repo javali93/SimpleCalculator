@@ -142,4 +142,15 @@ public class TestStringCalculator {
     void test_stringWithMultipleCustomDelimiterMultiChar() {
         assertEquals(6, StringCalculator.add("//[%%%][abc]\n1%%%2abc3"));
     }
+
+    @Test
+    void test_stringWithMultipleCustomDelimiterWithoutBrackets() {
+        assertThrows(IllegalArgumentException.class,
+                () -> StringCalculator.add("//[;]%\n1;2;3"));
+    }
+
+    @Test
+    void test_stringWithMultipleCustomAndDefaultDelimiters() {
+        assertEquals(15, StringCalculator.add("//[;][%%%][***]\n1%%%2***3;4,5"));
+    }
 }

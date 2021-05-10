@@ -38,7 +38,9 @@ public class StringNumberSplitter {
                 .replace("\n", "")
                 .replace("*", "\\*");
 
-        return splitStringBy(text, "]\\[").stream().collect(joining(OR));
+        return splitStringBy(text, "]\\[")
+                .stream()
+                .collect(joining(OR));
     }
 
     private List<String> splitStringBy(String text, String delimiters) {
