@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.util.stream.Collectors.joining;
+
 /**
  * @author chetana
  * @created on: 07, May 2021
@@ -17,22 +19,24 @@ public class StringNumberSplitter {
         String delimiters = getDefaultDelimiters();
         if (hasCustomDelimiter(text)) {
             int newLineIndex = text.indexOf("\n");
-            delimiters += OR + getCustomDelimiter(text.substring(0, newLineIndex + 1));
+            delimiters += OR + getCustomDelimiters(text.substring(0, newLineIndex + 1));
             text = text.subSequence(newLineIndex + 1, text.length()).toString();
         }
         return Arrays.asList(text.split(delimiters));
     }
 
-    private String getCustomDelimiter(String text) {
-        return text.replace("//", "")
+    private String getCustomDelimiters(String text) {
+        text = text.replace("//[", "")
+                .replace("//", "")
+                .replace("]\n", "")
                 .replace("\n", "")
-                .replace("[", "")
-                .replace("]", "")
                 .replace("*", "\\*");
+
+        return Arrays.asList(text.split("]\\[")).stream().collect(joining(OR));
     }
 
     private boolean hasCustomDelimiter(String text) {
-        Pattern pattern = Pattern.compile("//(.|\\[.*\\])\n(.{0,})");
+        Pattern pattern = Pattern.compile("//(.|(\\[.*\\]){0,})\n(.{0,})");
         Matcher matcher = pattern.matcher(text);
         if (matcher.matches()) {
             return true;
