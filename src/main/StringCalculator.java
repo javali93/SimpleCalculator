@@ -36,8 +36,8 @@ public class StringCalculator {
 
     private static int sumNumbers(List<String> numbersList) {
         return numbersList.stream()
-                .filter(s -> Integer.parseInt(s) <= 1000)
                 .mapToInt(Integer::parseInt)
+                .filter(n -> n <= 1000)
                 .sum();
     }
 

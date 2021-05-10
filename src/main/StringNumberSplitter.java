@@ -14,15 +14,21 @@ import static java.util.stream.Collectors.joining;
 public class StringNumberSplitter {
 
     private static final String OR = "|";
+    private static final String DEFAULT_DELIMITERS = "," + OR + "\n";
+
+    private Pattern pattern = Pattern.compile("//(.|(\\[.*\\]){0,})\n(.{0,})");
+
 
     protected List<String> splitStringToNumberList(String text) {
-        String delimiters = getDefaultDelimiters();
+        String delimiters = DEFAULT_DELIMITERS;
         if (hasCustomDelimiter(text)) {
             int newLineIndex = text.indexOf("\n");
+            //Append custom delimiters
             delimiters += OR + getCustomDelimiters(text.substring(0, newLineIndex + 1));
+            //Get text without delimiter initializer
             text = text.subSequence(newLineIndex + 1, text.length()).toString();
         }
-        return Arrays.asList(text.split(delimiters));
+        return splitStringBy(text, delimiters);
     }
 
     private String getCustomDelimiters(String text) {
@@ -32,21 +38,19 @@ public class StringNumberSplitter {
                 .replace("\n", "")
                 .replace("*", "\\*");
 
-        return Arrays.asList(text.split("]\\[")).stream().collect(joining(OR));
+        return splitStringBy(text, "]\\[").stream().collect(joining(OR));
+    }
+
+    private List<String> splitStringBy(String text, String delimiters) {
+        return Arrays.asList(text.split(delimiters));
     }
 
     private boolean hasCustomDelimiter(String text) {
-        Pattern pattern = Pattern.compile("//(.|(\\[.*\\]){0,})\n(.{0,})");
         Matcher matcher = pattern.matcher(text);
         if (matcher.matches()) {
             return true;
         }
         return false;
-    }
-
-    private String getDefaultDelimiters() {
-        String defaultDelimiters = "," + OR + "\n";
-        return defaultDelimiters;
     }
 }
 
